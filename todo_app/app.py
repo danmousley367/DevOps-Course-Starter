@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from todo_app.data.session_items import get_items, add_item, get_item, save_item
+from todo_app.data.session_items import get_items, add_item, get_item, save_item, delete_item
 
 from todo_app.flask_config import Config
 
@@ -14,18 +14,25 @@ def index():
                   item_title = request.form['item']
                   add_item(item_title)
 
-            if 'checkbox' in request.form.keys():
-                  checked_item_id = request.form['checkbox']
-                  checked_item = get_item(checked_item_id)
+            if 'updated_item' in request.form.keys():
+                  updated_item_id = request.form['updated_item']
+                  updated_item = get_item(updated_item_id)
 
-                  if checked_item['status'] == 'Not Started':
-                        checked_item['status'] = 'Finished'
-                  elif checked_item['status'] == 'Finished':
-                        checked_item['status'] = 'Not Started'
-                  save_item(checked_item)
+                  if updated_item['status'] == 'Not Started':
+                        updated_item['status'] = 'Finished'
+                  elif updated_item['status'] == 'Finished':
+                        updated_item['status'] = 'Not Started'
+                  save_item(updated_item)
+
+            if 'deleted_item' in request.form.keys():
+                  deleted_item_id = request.form['deleted_item']
+                  deleted_item = get_item(deleted_item_id)
+
+                  delete_item(deleted_item)
 
             return redirect(url_for('index'))
 
     items = get_items()
+    print(items)
     return render_template('index.html', items=items)
 
