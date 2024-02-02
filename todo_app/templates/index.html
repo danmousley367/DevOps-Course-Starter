@@ -7,23 +7,37 @@
     <p class="lead">Just another to-do app.</p>
   </div>
 
-  <form method="post">
-    <label for="item">Add item</label>
-    <br>
-    <input type="text" name="item" value="{{ request.form['item_title'] }}">
-    <button type="submit">submit</button>
+  <form method="post" class="form-inline">
+    <input type="text" class="form-control" placeholder="Add item to list" name="item" value="{{ request.form['item_title'] }}">
+    <button type="submit" class="btn btn-primary">Add</button>
   </form>
 
   <br>
 
-  <div class="row">
+  <form method="post">
+    <table class="table">
+      <tr>
+          <th>Item</th>
+          <th>Status</th>
+          <th></th>
+      </tr>
+      {% for item in items %}
+      <tr>
+          <td>{% if item.status == "Finished" %}<del>{{item.title}}</del>{% else %}{{item.title}}{% endif %}</td>
+          <td>{{item.status}}</td>
+          <td><button type=submit class="btn btn-secondary" name="checkbox" value={{item.id}}>Mark {% if item.status == "Finished" %}incomplete{% else %}complete{% endif %}</button></td>
+      </tr>    
+      {% endfor %}
+    </table>
+  </form>
+  <!-- <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
-      <ul class="list-group mb-4">
+      <form method="post">
         {% for item in items %}
-        <li>{{item.title}}</li>
+          <button type=submit name="checkbox" value={{item.id}}>Mark complete</button> {% if item.status == "Finished" %}<del>{{item.title}}</del>{% else %}{{item.title}}{% endif %} {{item.status}}<br/>
         {% endfor %}
-      </ul>
+      </form>
     </div>
-  </div>
+  </div> -->
 {% endblock %}
