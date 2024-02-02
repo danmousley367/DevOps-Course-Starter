@@ -45,7 +45,7 @@ def add_item(title):
     # Determine the ID for the item based on that of the previously added item
     id = items[-1]['id'] + 1 if items else 0
 
-    item = { 'id': id, 'title': title, 'status': 'Not Started'}
+    item = { 'id': id, 'title': title, 'status': 'Not Started' }
 
     # Add the item to the list
     items.append(item)
@@ -73,7 +73,7 @@ def delete_item(item):
     Deletes an existing item in the session. If no existing item matches the ID of the specified item, nothing is deleted.
 
     Args:
-        item: The item to save.
+        item: The item to delete.
     """
     existing_items = get_items()
     updated_items = [existing_item for existing_item in existing_items if existing_item['id'] != item['id']]
