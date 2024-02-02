@@ -10,8 +10,8 @@ app.config.from_object(Config())
 @app.route('/', methods=('GET', 'POST'))
 def index():
     if request.method == 'POST':
-            if 'item' in request.form.keys():
-                  item_title = request.form['item']
+            if 'added_item' in request.form.keys():
+                  item_title = request.form['added_item']
                   add_item(item_title)
 
             if 'updated_item' in request.form.keys():
@@ -33,6 +33,7 @@ def index():
             return redirect(url_for('index'))
 
     items = get_items()
-    print(items)
-    return render_template('index.html', items=items)
+    sorted_items = sorted(items, key=lambda item: item['status'], reverse=True) 
+
+    return render_template('index.html', items=sorted_items)
 
