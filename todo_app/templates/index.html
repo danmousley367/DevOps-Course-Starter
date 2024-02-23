@@ -6,13 +6,44 @@
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
   </div>
+  
+  <form method="post" class="form-inline">
+    <input type="text" class="form-control mr-2" placeholder="Add item to list" name="added_item" value="{{ request.form['item_title'] }}">
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Items</h2>
-      <ul class="list-group mb-4">
-        <!-- List the todo items here -->
-      </ul>
-    </div>
-  </div>
+  <br>
+
+  <form method="post">
+    <table class="table">
+      <tr>
+          <th>Item</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+      </tr>
+      {% for item in items %}
+      <tr>
+          <td>
+            {% if item.status == "Finished" %}
+              <del>{{item.title}}</del>
+            {% else %}
+              {{item.title}}
+            {% endif %}
+          </td>
+          <td>{{item.status}}</td>
+          <td>
+            <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
+              Mark {% if item.status == "Finished" %}incomplete{% else %}complete{% endif %}
+            </button>
+          </td>
+          <td>
+            <button type=submit class="btn btn-danger" name="deleted_item" value={{item.id}}>
+              x
+            </button>
+          </td>
+      </tr>    
+      {% endfor %}
+    </table>
+  </form>
 {% endblock %}
