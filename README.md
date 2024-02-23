@@ -48,6 +48,8 @@ You'll need a Trello account to be able to access the API in this project. To se
 * Add `http://http://127.0.0.1:5000` to the list of allowed origins.
 * Select the link to generate an API token and also copy this into the `.env`.
 * Make a call to `https://api.trello.com/1/members/me/boards?key={yourKey}&token={yourToken}` to find your board ID and copy this into the `.env` too.
+* You'll also need to create a list. You can do so with a POST request to `https://api.trello.com/1/lists?name={name}&idBoard={boardId}&key={APIKey}&token={APIToken}`
+* Copy the ID from the response into your `.env` file.
 
 ## Running the App
 

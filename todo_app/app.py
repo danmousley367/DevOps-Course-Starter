@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from todo_app.data.session_items import get_items, add_item, get_item, save_item, delete_item
+from todo_app.data.trello_items import add_trello_item
 
 from todo_app.flask_config import Config
 
@@ -17,7 +18,7 @@ def index():
 def change_item():
       if 'added_item' in request.form.keys():
             item_title = request.form['added_item']
-            add_item(item_title)
+            add_trello_item(item_title)
 
       if 'updated_item' in request.form.keys():
             updated_item_id = request.form['updated_item']
