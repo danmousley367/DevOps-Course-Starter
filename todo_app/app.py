@@ -6,34 +6,34 @@ from todo_app.flask_config import Config
 app = Flask(__name__)
 app.config.from_object(Config())
 
-
-@app.route('/', methods=('GET', 'POST'))
+@app.route('/')
 def index():
-    if request.method == 'POST':
-            if 'added_item' in request.form.keys():
-                  item_title = request.form['added_item']
-                  add_item(item_title)
+      items = get_items()
+      sorted_items = sorted(items, key=lambda item: item['status'], reverse=True) 
 
-            if 'updated_item' in request.form.keys():
-                  updated_item_id = request.form['updated_item']
-                  updated_item = get_item(updated_item_id)
+      return render_template('index.html', items=sorted_items)
 
-                  if updated_item['status'] == 'Not Started':
-                        updated_item['status'] = 'Finished'
-                  elif updated_item['status'] == 'Finished':
-                        updated_item['status'] = 'Not Started'
-                  save_item(updated_item)
+@app.route('/', methods=['POST'])
+def change_item():
+      if 'added_item' in request.form.keys():
+            item_title = request.form['added_item']
+            add_item(item_title)
 
-            if 'deleted_item' in request.form.keys():
-                  deleted_item_id = request.form['deleted_item']
-                  deleted_item = get_item(deleted_item_id)
+      if 'updated_item' in request.form.keys():
+            updated_item_id = request.form['updated_item']
+            updated_item = get_item(updated_item_id)
 
-                  delete_item(deleted_item)
+            if updated_item['status'] == 'Not Started':
+                  updated_item['status'] = 'Finished'
+            elif updated_item['status'] == 'Finished':
+                  updated_item['status'] = 'Not Started'
+            save_item(updated_item)
 
-            return redirect(url_for('index'))
+      if 'deleted_item' in request.form.keys():
+            deleted_item_id = request.form['deleted_item']
+            deleted_item = get_item(deleted_item_id)
 
-    items = get_items()
-    sorted_items = sorted(items, key=lambda item: item['status'], reverse=True) 
+            delete_item(deleted_item)
 
-    return render_template('index.html', items=sorted_items)
+      return redirect(url_for('index'))
 

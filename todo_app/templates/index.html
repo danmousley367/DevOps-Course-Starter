@@ -24,10 +24,24 @@
       </tr>
       {% for item in items %}
       <tr>
-          <td>{% if item.status == "Finished" %}<del>{{item.title}}</del>{% else %}{{item.title}}{% endif %}</td>
+          <td>
+            {% if item.status == "Finished" %}
+              <del>{{item.title}}</del>
+            {% else %}
+              {{item.title}}
+            {% endif %}
+          </td>
           <td>{{item.status}}</td>
-          <td><button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>Mark {% if item.status == "Finished" %}incomplete{% else %}complete{% endif %}</button></td>
-          <td><button type=submit class="btn btn-danger" name="deleted_item" value={{item.id}}>x</button></td>
+          <td>
+            <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
+              Mark {% if item.status == "Finished" %}incomplete{% else %}complete{% endif %}
+            </button>
+          </td>
+          <td>
+            <button type=submit class="btn btn-danger" name="deleted_item" value={{item.id}}>
+              x
+            </button>
+          </td>
       </tr>    
       {% endfor %}
     </table>
