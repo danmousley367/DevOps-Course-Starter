@@ -19,12 +19,16 @@ def index():
 
       return render_template('index.html', items=item_list, done_list_id=done_list_id)
 
-@app.route('/', methods=['POST'])
-def change_item():
+@app.route('/add', methods=['POST'])
+def add_item():
       if 'added_item' in request.form.keys():
             item_title = request.form['added_item']
             add_board_item(item_title)
 
+      return redirect(url_for('index'))
+
+@app.route('/update', methods=['POST'])
+def update_item_status():
       if 'updated_item' in request.form.keys():
             updated_item_id = request.form['updated_item']
             updated_item = get_board_item(updated_item_id)
@@ -34,9 +38,12 @@ def change_item():
             elif updated_item['idList'] == done_list_id:
                   update_status(updated_item_id, todo_list_id)
 
+      return redirect(url_for('index'))
+
+@app.route('/delete', methods=['POST'])
+def delete_item():
       if 'deleted_item' in request.form.keys():
             deleted_item_id = request.form['deleted_item']
             delete_board_item(deleted_item_id)
 
       return redirect(url_for('index'))
-
