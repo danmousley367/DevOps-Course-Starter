@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from todo_app.data.trello_items import add_board_item, get_board_items, get_board_item, update_status, delete_board_item
+from todo_app.data.Item import Item
 import os
 from todo_app.flask_config import Config
 
@@ -14,7 +15,9 @@ def index():
       done_items = get_board_items(done_list_id)
       items = todo_items + done_items
 
-      return render_template('index.html', items=items, todoListId=todo_list_id, doneListId=done_list_id)
+      item_list = [Item.from_trello_card(item) for item in items]
+
+      return render_template('index.html', items=item_list, done_list_id=done_list_id)
 
 @app.route('/', methods=['POST'])
 def change_item():

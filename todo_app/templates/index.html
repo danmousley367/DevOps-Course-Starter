@@ -25,17 +25,17 @@
       {% for item in items %}
       <tr>
           <td>
-            {% if item.idList == doneListId %}
+            {% if item.list_id == done_list_id %}
               <del>{{item.name}}</del>
             {% else %}
               {{item.name}}
             {% endif %}
             <!-- {{item.name}} -->
           </td>
-          <td>{% if item.idList == doneListId %}Complete{% else %}To do{% endif %}</td>
+          <td>{% if item.list_id == done_list_id %}Complete{% else %}To do{% endif %}</td>
           <td>
             <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
-              Mark {% if item.idList == doneListId %}incomplete{% else %}complete{% endif %}
+              Mark {% if item.list_id == done_list_id %}incomplete{% else %}complete{% endif %}
             </button>
           </td>
           <td>
