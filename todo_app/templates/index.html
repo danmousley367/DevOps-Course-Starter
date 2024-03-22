@@ -7,43 +7,45 @@
     <p class="lead">Just another to-do app.</p>
   </div>
   
-  <form method="post" class="form-inline">
+  <form action="/add" method="post" class="form-inline">
     <input type="text" class="form-control mr-2" placeholder="Add item to list" name="added_item" value="{{ request.form['item_title'] }}">
     <button type="submit" class="btn btn-primary">Add</button>
   </form>
 
   <br>
 
-  <form method="post">
-    <table class="table">
-      <tr>
-          <th>Item</th>
-          <th>Status</th>
-          <th></th>
-          <th></th>
-      </tr>
-      {% for item in items %}
-      <tr>
-          <td>
-            {% if item.status == "Finished" %}
-              <del>{{item.title}}</del>
-            {% else %}
-              {{item.title}}
-            {% endif %}
-          </td>
-          <td>{{item.status}}</td>
-          <td>
+  <table class="table">
+    <tr>
+        <th>Item</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>
+          {% if item.list_id == done_list_id %}
+            <del>{{item.name}}</del>
+          {% else %}
+            {{item.name}}
+          {% endif %}
+        </td>
+        <td>{% if item.list_id == done_list_id %}Complete{% else %}To do{% endif %}</td>
+        <td>
+          <form action="/update" method="post">
             <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
-              Mark {% if item.status == "Finished" %}incomplete{% else %}complete{% endif %}
+              Mark {% if item.list_id == done_list_id %}incomplete{% else %}complete{% endif %}
             </button>
-          </td>
-          <td>
+          </form>
+        </td>
+        <td>
+          <form action="/delete" method="post">
             <button type=submit class="btn btn-danger" name="deleted_item" value={{item.id}}>
               x
             </button>
-          </td>
-      </tr>    
-      {% endfor %}
-    </table>
-  </form>
+          </form>
+        </td>
+    </tr>    
+    {% endfor %}
+  </table>
 {% endblock %}
