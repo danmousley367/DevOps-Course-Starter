@@ -17,7 +17,7 @@ def index():
       items = todo_items + done_items
 
       item_list = [Item.from_trello_card(item) for item in items]
-      item_view_model = ViewModel(item_list, done_list_id)
+      item_view_model = ViewModel(item_list)
 
       return render_template('index.html', view_model=item_view_model)
 
