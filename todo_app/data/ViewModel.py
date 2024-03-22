@@ -10,3 +10,7 @@ class ViewModel:
     @property
     def done_list_id(self):
         return self._done_list_id
+    
+    @property
+    def done_items(self):
+        return []
