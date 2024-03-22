@@ -21,20 +21,20 @@
         <th></th>
         <th></th>
     </tr>
-    {% for item in items %}
+    {% for item in view_model.items %}
     <tr>
         <td>
-          {% if item.list_id == done_list_id %}
+          {% if item.list_id == view_model.done_list_id %}
             <del>{{item.name}}</del>
           {% else %}
             {{item.name}}
           {% endif %}
         </td>
-        <td>{% if item.list_id == done_list_id %}Complete{% else %}To do{% endif %}</td>
+        <td>{% if item.list_id == view_model.done_list_id %}Complete{% else %}To do{% endif %}</td>
         <td>
           <form action="/update" method="post">
             <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
-              Mark {% if item.list_id == done_list_id %}incomplete{% else %}complete{% endif %}
+              Mark {% if item.list_id == view_model.done_list_id %}incomplete{% else %}complete{% endif %}
             </button>
           </form>
         </td>
