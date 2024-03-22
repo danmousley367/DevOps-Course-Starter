@@ -6,9 +6,6 @@ BASE_URL = "https://api.trello.com/1"
 DEFAULT_HEADERS = {
   "Accept": "application/json"
 }
-API_KEY = os.getenv('TRELLO_API_KEY')
-API_TOKEN = os.getenv('TRELLO_API_TOKEN')
-TODO_LIST_ID = os.getenv('TRELLO_TODO_LIST_ID')
 
 def add_board_item(title):
     """
@@ -21,21 +18,20 @@ def add_board_item(title):
         item: The new item.
     """
     query = {
-        'idList': TODO_LIST_ID,
-        'key': API_KEY,
-        'token': API_TOKEN,
+        'idList': os.getenv('TRELLO_TODO_LIST_ID'),
+        'key': os.getenv('TRELLO_API_KEY'),
+        'token': os.getenv('TRELLO_API_TOKEN'),
         'name': title
     }
     
     try:
-        response = requests.request(
+        requests.request(
             "POST",
             f"{BASE_URL}/cards",
             headers=DEFAULT_HEADERS,
             params=query
         )
 
-        return json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": "))
     except:
         print(f"Attempt to create item with title {title} failed")
 
@@ -50,8 +46,8 @@ def get_board_item(id):
         item: The requested item.
     """
     query = {
-        'key': API_KEY,
-        'token': API_TOKEN,
+        'key': os.getenv('TRELLO_API_KEY'),
+        'token': os.getenv('TRELLO_API_TOKEN'),
     }
     
     try:
@@ -75,8 +71,8 @@ def get_board_items(list_id):
     """
 
     query = {
-        'key': API_KEY,
-        'token': API_TOKEN,
+        'key': os.getenv('TRELLO_API_KEY'),
+        'token': os.getenv('TRELLO_API_TOKEN'),
         'cards': 'open'
     }
 
@@ -100,20 +96,18 @@ def update_status(item_id, list_id):
     """
 
     query = {
-        'key': API_KEY,
-        'token': API_TOKEN,
+        'key': os.getenv('TRELLO_API_KEY'),
+        'token': os.getenv('TRELLO_API_TOKEN'),
         'idList': list_id
     }
     
     try:
-        response = requests.request(
+        requests.request(
             "PUT",
             f"{BASE_URL}/cards/{item_id}",
             headers=DEFAULT_HEADERS,
             params=query
         )
-
-        return json.loads(response.text)
     except:
         print(f"Attempt to mark item incomplete failed")
 
@@ -126,8 +120,8 @@ def delete_board_item(item_id):
     """
 
     query = {
-        'key': API_KEY,
-        'token': API_TOKEN
+        'key': os.getenv('TRELLO_API_KEY'),
+        'token': os.getenv('TRELLO_API_TOKEN')
     }
     
     try:
