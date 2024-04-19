@@ -15,30 +15,49 @@
   <br>
 
   <table class="table">
-    <tr>
-        <th>Item</th>
-        <th>Status</th>
-        <th></th>
-        <th></th>
+    <tr class="row">
+        <th class="col-4">To do items</th>
+        <th class="col-4"></th>
+        <th class="col-4"></th>
     </tr>
-    {% for item in items %}
-    <tr>
-        <td>
-          {% if item.list_id == done_list_id %}
-            <del>{{item.name}}</del>
-          {% else %}
-            {{item.name}}
-          {% endif %}
-        </td>
-        <td>{% if item.list_id == done_list_id %}Complete{% else %}To do{% endif %}</td>
-        <td>
+    {% for item in view_model.todo_items %}
+    <tr class="row">
+        <td class="col-4">{{item.name}}</td>
+        <td class="col-4">
           <form action="/update" method="post">
             <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
-              Mark {% if item.list_id == done_list_id %}incomplete{% else %}complete{% endif %}
+              Mark complete
             </button>
           </form>
         </td>
-        <td>
+        <td class="col-4">
+          <form action="/delete" method="post">
+            <button type=submit class="btn btn-danger" name="deleted_item" value={{item.id}}>
+              x
+            </button>
+          </form>
+        </td>
+    </tr>    
+    {% endfor %}
+  </table>
+
+  <table class="table">
+    <tr class="row">
+        <th class="col-4">Completed items</th>
+        <th class="col-4"></th>
+        <th class="col-4"></th>
+    </tr>
+    {% for item in view_model.done_items %}
+    <tr class="row">
+        <td class="col-4"><del>{{item.name}}</del></td>
+        <td class="col-4">
+          <form action="/update" method="post">
+            <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
+              Mark incomplete
+            </button>
+          </form>
+        </td>
+        <td class="col-4">
           <form action="/delete" method="post">
             <button type=submit class="btn btn-danger" name="deleted_item" value={{item.id}}>
               x
