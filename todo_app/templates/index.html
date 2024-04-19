@@ -26,7 +26,7 @@
         <td class="col-4">
           <form action="/update" method="post">
             <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
-              Mark {% if item.list_id == view_model.done_list_id %}incomplete{% else %}complete{% endif %}
+              Mark complete
             </button>
           </form>
         </td>
@@ -53,7 +53,7 @@
         <td class="col-4">
           <form action="/update" method="post">
             <button type=submit class="btn btn-secondary" name="updated_item" value={{item.id}}>
-              Mark {% if item.list_id == view_model.done_list_id %}incomplete{% else %}complete{% endif %}
+              Mark incomplete
             </button>
           </form>
         </td>
