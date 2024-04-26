@@ -87,6 +87,6 @@ Copy `inventory.ini`, `playbook.yml`, `.env.js2` and `todoapp.service` from the 
 
 From your ACN, add the ip address of the host(s) you would like to use to `inventory.ini` under `[servers]`.
 
-Execute `ansible-playbook playbook.yml -i inventory.ini` to run the app on your host(s)*.
+Execute `ansible-playbook playbook.yml -i inventory.ini` and enter your API key and API token to run the app on your host(s).
 
 Head to `http://<hostIpAddress>:5000/` to view your hosted app.
