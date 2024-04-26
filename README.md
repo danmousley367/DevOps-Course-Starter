@@ -78,3 +78,15 @@ You can run the tests with `poetry run pytest`.
 If using VSCode, you can set up the IDE to run the tests too. Click on the scientific flask on the left tab and configure the tests to use pytest from the `.` root directory (assuming you've openned the project from the `DevOps-Course-Starter` folder).
 
 Once you've done this, you can view all the tests from this tab, as well as running specific tests by pressing the play button that should have appeared next to them, and also all the tests in a file/directory by right clicking and selecting 'Run tests'.
+
+## Running the app on a virtual machine
+
+> The below instructions assume that the username on your host is `ec2-user`. If not, you should replace instances of `ec2-user` in `playbook.yml` and `todoapp.service` with your user name.
+
+Copy `inventory.ini`, `playbook.yml`, `.env.js2` and `todoapp.service` from the repo, to the root of your Ansible Control Node (ACN).
+
+From your ACN, add the ip address of the host(s) you would like to use to `inventory.ini` under `[servers]`.
+
+Execute `ansible-playbook playbook.yml -i inventory.ini` to run the app on your host(s)*.
+
+Head to `http://<hostIpAddress>:5000/` to view your hosted app.
