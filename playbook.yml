@@ -40,7 +40,7 @@
       src: ./todoapp.service
       dest: /etc/systemd/system/todoapp.service
       owner: ec2-user
-      mode: '711'
+      mode: '0644'
     become: yes
   - name: Start todoapp
     ansible.builtin.systemd_service:
