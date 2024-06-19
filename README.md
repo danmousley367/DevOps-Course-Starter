@@ -90,3 +90,23 @@ From your ACN, add the ip address of the host(s) you would like to use to `inven
 Execute `ansible-playbook playbook.yml -i inventory.ini` and enter your API key and API token to run the app on your host(s).
 
 Head to `http://<hostIpAddress>:5000/` to view your hosted app.
+
+## Running the app in a Docker container
+
+### Run a production version of the app
+
+Build the container with:
+
+`docker build --target production --tag todo-app:prod .`
+
+Run the app in the container with:
+
+`docker run --env-file .env --publish 5000:5000 -d todo-app:prod`
+
+### Run a development version of the app
+
+The development version will allow you to view detailed logging and feedback and see rapid changes made in the code without having to rebuild.
+
+Build and run the conatiner with:
+
+`docker-compose up`
