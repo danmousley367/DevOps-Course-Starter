@@ -22,6 +22,11 @@ jobs:
       run: docker build --target test -t todoapp:test .
     - name: Run unit and integration tests    
       run: docker run todoapp:test
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     - name: Slack Notification
       if: failure()
       uses: bryannice/gitactions-slack-notification@2.0.0
