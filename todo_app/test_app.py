@@ -51,5 +51,5 @@ def test_get_index_page(client, monkeypatch):
     response = client.get('/')
 
     assert response.status_code == 200
-    assert 'Test card 1' in response.data.decode()
+    assert 'Tesjsdhbjs 1' in response.data.decode()
     assert 'Test card 2' in response.data.decode()
