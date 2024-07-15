@@ -23,10 +23,10 @@ jobs:
     - name: Run unit and integration tests    
       run: docker run todoapp:test
     - name: Slack Notification
-        if: always()
-        uses: bryannice/gitactions-slack-notification@2.0.0
-        env:
-          SLACK_INCOMING_WEBHOOK: 'https://hooks.slack.com/services/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'
-          SLACK_MESSAGE: 'Pipeline completed'
-          SLACK_TITLE: 'To do app workflow'
-          SLACK_CHANNEL: 'devops-pipeline'
+      if: always()
+      uses: bryannice/gitactions-slack-notification@2.0.0
+      env:
+        SLACK_INCOMING_WEBHOOK: 'https://hooks.slack.com/services/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'
+        SLACK_MESSAGE: 'Pipeline completed'
+        SLACK_TITLE: 'To do app workflow'
+        SLACK_CHANNEL: 'devops-pipeline'
