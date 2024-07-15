@@ -10,3 +10,5 @@ jobs:
     - run: echo Hello World
     - name: Build test image    
       run: docker build --target test -t todoapp:test .
+    - name: Run tests    
+      run: docker run todoapp:test
