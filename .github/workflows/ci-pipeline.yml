@@ -26,7 +26,7 @@ jobs:
       if: always()
       uses: bryannice/gitactions-slack-notification@2.0.0
       env:
-        SLACK_INCOMING_WEBHOOK: 'https://hooks.slack.com/services/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'
+        SLACK_INCOMING_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
         SLACK_MESSAGE: 'Pipeline completed'
         SLACK_TITLE: 'To do app workflow'
         SLACK_CHANNEL: 'devops-pipeline'
