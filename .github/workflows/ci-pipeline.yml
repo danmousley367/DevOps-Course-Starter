@@ -1,5 +1,13 @@
 name: Continuous Integration
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'documentation/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'documentation/**'
 
 jobs:
   build:
@@ -10,5 +18,5 @@ jobs:
     - run: echo Hello World
     - name: Build test image    
       run: docker build --target test -t todoapp:test .
-    - name: Run tests    
+    - name: Run unit and integration tests    
       run: docker run todoapp:test
