@@ -1,0 +1,35 @@
+name: Continuous Integration
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'documentation/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'documentation/**'
+  schedule:
+    - cron: '0 5 * * mon'
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build test image    
+      run: docker build --target test -t todoapp:test .
+    - name: Run unit and integration tests    
+      run: docker run todoapp:test
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - name: Slack Notification
+      if: failure()
+      uses: bryannice/gitactions-slack-notification@2.0.0
+      env:
+        SLACK_INCOMING_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
+        SLACK_MESSAGE: 'Pipeline ${{ github.run_number }} failed'
+        SLACK_TITLE: 'To do app workflow'
+        SLACK_CHANNEL: 'devops-pipeline'

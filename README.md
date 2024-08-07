@@ -73,11 +73,25 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 
 ## Testing
 
+### Running tests in the IDE
+
 You can run the tests with `poetry run pytest`.
 
 If using VSCode, you can set up the IDE to run the tests too. Click on the scientific flask on the left tab and configure the tests to use pytest from the `.` root directory (assuming you've openned the project from the `DevOps-Course-Starter` folder).
 
 Once you've done this, you can view all the tests from this tab, as well as running specific tests by pressing the play button that should have appeared next to them, and also all the tests in a file/directory by right clicking and selecting 'Run tests'.
+
+### Running tests in a docker container
+
+First, build the test image from the root of the repository with:
+
+`docker build --target test -t todoapp:test .`
+
+Then, run the tests in the container with:
+
+`docker run --rm todoapp:test`
+
+Note, the `--rm` flag will remove your container once the tests have completed.
 
 ## Running the app on a virtual machine
 
