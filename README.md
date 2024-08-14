@@ -124,3 +124,45 @@ The development version will allow you to view detailed logging and feedback and
 Build and run the conatiner with:
 
 `docker-compose up`
+
+## Production app Docker image
+
+The production app image is deployed to DockerHub and can be pulled from the following link:
+
+`docker.io/danmou367/my-todo-app:prod`
+
+## Steps taken to deploy the production app to Azure
+
+### Deploy the image to Docker Hub
+
+Log in to docker from the CLI using `docker login` and build the image with:
+
+`docker build --target production --platform linux/amd64 --tag danmou367/my-todo-app:prod .`
+
+Note, we explicitly set the platform here as our Azure App Service environment will be running on Linux AMD64 and the default when building the image is ARM64, which causes the app to fail when deploying.
+
+Next, push the image to DockerHub with:
+
+`docker push danmou367/my-todo-app:prod`.
+
+### Create an Azure App Service
+
+First, create an App Service Plan with:
+
+`az appservice plan create --resource-group cohort32-33_DanMou_ProjectExercise -n danmou_app_service_plan --sku B1 --is-linux`
+
+Then create the web app with:
+
+`az webapp create --resource-group cohort32-33_DanMou_ProjectExercise --plan danmou_app_service_plan --name danmou-070824-todoapp --deployment-container-image-name docker.io/danmou367/my-todo-app:prod`
+
+Next set the environment variables defined in `.env.template` (populating the correct values for those variables) using:
+
+`az webapp config appsettings set -g cohort32-33_DanMou_ProjectExercise -n danmou-070824-todoapp --settings WEBSITES_PORT=5000 var1=<var1_value> var2=<var2_value>`
+
+Please note the following:
+* The `WEBSITES_PORT=5000` variable has been added in the above to ensure App service knows which port the container is listening on.
+* We also set `FLASK_DEBUG=false` as this is a production version of the app.
+
+The app is now deployed at:
+
+`http://danmou-070824-todoapp.azurewebsites.net/`
