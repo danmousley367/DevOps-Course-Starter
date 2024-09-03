@@ -33,3 +33,9 @@ jobs:
         SLACK_MESSAGE: 'Pipeline ${{ github.run_number }} failed'
         SLACK_TITLE: 'To do app workflow'
         SLACK_CHANNEL: 'devops-pipeline'
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/exercise-9' }}
+    steps:  
+    - run: echo Publishing
