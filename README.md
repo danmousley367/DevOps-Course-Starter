@@ -165,4 +165,4 @@ Please note the following:
 
 The app is now deployed at:
 
-`http://danmou-070824-todoapp.azurewebsites.net/`
+`https://danmou-070824-todoapp.azurewebsites.net/`
