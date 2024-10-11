@@ -33,3 +33,20 @@ jobs:
         SLACK_MESSAGE: 'Pipeline ${{ github.run_number }} failed'
         SLACK_TITLE: 'To do app workflow'
         SLACK_CHANNEL: 'devops-pipeline'
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Build image
+      run: docker build --target production --tag danmou367/my-todo-app:latest .
+    - name: Publish image
+      run: docker push danmou367/my-todo-app:latest
+    - name: Allow Azure to pull latest image
+      run: curl -dH --fail -X POST '${{ secrets.AZURE_WEBHOOK }}'
