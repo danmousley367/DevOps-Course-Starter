@@ -3,10 +3,11 @@ import os
 from todo_app.data.Status import Status
 from bson import ObjectId
 
-db_connection_string = os.getenv('COSMOS_DB_CONNECTION_STRING')
-client = pymongo.MongoClient( db_connection_string, tlsCaFile="../../DigiCertGlobalRootG2.crt.pem")
-db = client.todo_app_db
-items_list = db.todo_list
+def get_items_list():
+    db_connection_string = os.getenv('COSMOS_DB_CONNECTION_STRING')
+    client = pymongo.MongoClient(db_connection_string, tlsCaFile="../../DigiCertGlobalRootG2.crt.pem")
+    db = client.todo_app_db
+    return db.todo_list
 
 def add_db_item(title):
     """
@@ -18,6 +19,7 @@ def add_db_item(title):
     Returns:
         item: The new item.
     """
+    items_list = get_items_list()
     
     try:
         response = items_list.insert_one({
@@ -39,6 +41,7 @@ def get_db_item(id):
     Returns:
         item: The requested item.
     """
+    items_list = get_items_list()
     
     try:
         response = items_list.find_one({"_id": ObjectId(id)})
@@ -54,6 +57,7 @@ def get_db_items():
     Returns:
         list: The list of saved items.
     """
+    items_list = get_items_list()
 
     try:
         response = items_list.find()
@@ -70,6 +74,7 @@ def update_status(item_id, status):
     Returns:
         card: The card that was moved to a new list.
     """
+    items_list = get_items_list()
     
     try:
         response = items_list.update_one({"_id": ObjectId(item_id)}, {'$set': {"status": status}})
@@ -84,6 +89,7 @@ def delete_db_item(item_id):
     Returns:
         None.
     """
+    items_list = get_items_list()
     
     try:
         response = items_list.delete_one({"_id": ObjectId(item_id)})
