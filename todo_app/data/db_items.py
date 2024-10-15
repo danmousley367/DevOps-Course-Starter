@@ -5,7 +5,7 @@ from bson import ObjectId
 
 def get_items_list():
     db_connection_string = os.getenv('COSMOS_DB_CONNECTION_STRING')
-    client = pymongo.MongoClient(db_connection_string, tlsCaFile="../../DigiCertGlobalRootG2.crt.pem")
+    client = pymongo.MongoClient(db_connection_string, tlsCaFile="DigiCertGlobalRootG2.crt.pem")
     db = client.todo_app_db
     return db.todo_list
 

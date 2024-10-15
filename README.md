@@ -40,7 +40,7 @@ The `.env` file is used by flask to set environment variables when running `flas
 
 ## Running the App
 
-Once the all dependencies have been installed and you've set up Trello API access, start the Flask app in development mode within the Poetry environment by running:
+Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
 ```bash
 $ poetry run flask run
 ```
