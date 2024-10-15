@@ -50,9 +50,6 @@
     become: yes
 
   vars_prompt:
-  - name: trello_api_key
-    prompt: Enter Trello API key 
-    private: true
-  - name: trello_api_token
-    prompt: Enter Trello API token
+  - name: cosmos_db_connection_string
+    prompt: Enter CosmosDB connection string
     private: true
