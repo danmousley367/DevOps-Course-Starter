@@ -9,7 +9,7 @@ def get_items_list():
     db = client.todo_app_db
     return db.todo_list
 
-def add_db_item(title):
+def add_todo_item(title):
     """
     Adds a new item with the specified title to the database.
 
@@ -31,7 +31,7 @@ def add_db_item(title):
     except Exception as e:
         print(f"Attempt to create item with title {title} failed. Error: {e}")
 
-def get_db_item(id):
+def get_todo_item(id):
     """
     Gets the item from the database.
 
@@ -50,7 +50,7 @@ def get_db_item(id):
     except Exception as e:
         print(f"Attempt to get item failed. Error: {e}")
 
-def get_db_items():
+def get_todo_items():
     """
     Fetches all saved items from the database.
 
@@ -82,7 +82,7 @@ def update_status(item_id, status):
     except Exception as e:
         print(f"Attempt to mark item incomplete failed. Error: {e}")
 
-def delete_db_item(item_id):
+def delete_todo_item(item_id):
     """
     Deletes an item in the database.
 
