@@ -10,7 +10,7 @@ RUN mkdir app
 
 WORKDIR /app
 
-COPY ./poetry.lock ./poetry.toml ./pyproject.toml ./DigiCertGlobalRootG2.crt.pem ./
+COPY ./poetry.lock ./poetry.toml ./pyproject.toml ./DigiCertGlobalRootG2.crt.pem ./oauth.py ./
 
 FROM base as production
 
