@@ -7,11 +7,13 @@ from todo_app.data.Status import Status
 from oauth import blueprint
 
 from todo_app.utils.require_github_auth import login_required
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 def create_app():
       app = Flask(__name__)
       app.config.from_object(Config())
       app.register_blueprint(blueprint, url_prefix="/login")
+      app.wsgi_app = ProxyFix(app.wsgi_app)
 
       @app.route('/')
       @login_required
