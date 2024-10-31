@@ -4,12 +4,17 @@ from todo_app.data.Item import Item
 from todo_app.data.ViewModel import ViewModel
 from todo_app.flask_config import Config
 from todo_app.data.Status import Status
+from oauth import blueprint
+
+from todo_app.utils.require_github_auth import login_required
 
 def create_app():
       app = Flask(__name__)
       app.config.from_object(Config())
+      app.register_blueprint(blueprint, url_prefix="/login")
 
       @app.route('/')
+      @login_required
       def index():
             items = get_todo_items()
 
@@ -19,6 +24,7 @@ def create_app():
             return render_template('index.html', view_model=item_view_model)
 
       @app.route('/add', methods=['POST'])
+      @login_required
       def add_item():
             if 'added_item' in request.form.keys():
                   item_title = request.form['added_item']
@@ -27,6 +33,7 @@ def create_app():
             return redirect(url_for('index'))
 
       @app.route('/update', methods=['POST'])
+      @login_required
       def update_item_status():
             if 'updated_item' in request.form.keys():
                   updated_item_id = request.form['updated_item']
@@ -40,6 +47,7 @@ def create_app():
             return redirect(url_for('index'))
 
       @app.route('/delete', methods=['POST'])
+      @login_required
       def delete_item():
             if 'deleted_item' in request.form.keys():
                   deleted_item_id = request.form['deleted_item']

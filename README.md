@@ -153,3 +153,7 @@ Please note the following:
 The app is now deployed at:
 
 `https://danmou-070824-todoapp.azurewebsites.net/`
+
+### Data encryption status
+
+Our data is currently stored in Azure Cosmos DB, for which [all data is encrypted at rest](https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest).
