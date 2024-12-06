@@ -6,12 +6,14 @@ authors = []
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Flask = "^2.2.5"
+Flask = "^3.0.3"
 python-dotenv = "^0.14.0"
 requests = "^2.31.0"
 pytest = "^8.1.1"
 pymongo = "^4.10.1"
 mongomock = "^4.2.0.post1"
+flask-dance = "^7.1.0"
+werkzeug = "3.0.6"
 
 [tool.poetry.dev-dependencies]
 
