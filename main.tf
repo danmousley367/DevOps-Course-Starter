@@ -25,7 +25,7 @@ resource "azurerm_service_plan" "main" {
 }
 
 resource "azurerm_linux_web_app" "main" {
-  name                = "danmou-061224-terraform-todoapp"
+  name                = "${var.prefix}-danmou-061224-terraform-todoapp"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   service_plan_id     = azurerm_service_plan.main.id
@@ -42,8 +42,8 @@ resource "azurerm_linux_web_app" "main" {
     "FLASK_DEBUG"                 = true
     "SECRET_KEY"                  = "secret-key"
     "COSMOS_DB_CONNECTION_STRING" = azurerm_cosmosdb_account.db.primary_mongodb_connection_string
-    "OAUTH_CLIENT_ID"             = "Ov23liT1z8nNtSCOyVtN"
-    "OAUTH_CLIENT_SECRET"         = "cf6aa082e19da7a22af3f3e4e616266d933cb014"
+    "OAUTH_CLIENT_ID"             = var.oauth_client_id
+    "OAUTH_CLIENT_SECRET"         = var.oauth_client_secret
     "OAUTHLIB_INSECURE_TRANSPORT" = 1
   }
 }
@@ -80,7 +80,7 @@ resource "azurerm_cosmosdb_account" "db" {
 }
 
 resource "azurerm_cosmosdb_mongo_database" "main" {
-  name                = "danmou-terraform-cosmos-mongodb"
+  name                = "${var.prefix}-danmou-terraform-cosmos-mongodb"
   resource_group_name = azurerm_cosmosdb_account.db.resource_group_name
   account_name        = azurerm_cosmosdb_account.db.name
 
