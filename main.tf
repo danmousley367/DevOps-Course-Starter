@@ -5,6 +5,13 @@ terraform {
       version = ">= 3.8"
     }
   }
+
+  backend "azurerm" {
+        resource_group_name  = "cohort32-33_DanMou_ProjectExercise"
+        storage_account_name = "danmoustorageaccount"
+        container_name       = "danmoustoragecontainer"
+        key                  = "terraform.tfstate"
+    }
 }
 
 provider "azurerm" {
