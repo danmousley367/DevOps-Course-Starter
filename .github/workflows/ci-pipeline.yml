@@ -44,8 +44,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: build
-    # Update below branch to main
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/exercise-12' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
     - uses: actions/checkout@v4
     - name: Login to Docker Hub
@@ -68,4 +67,4 @@ jobs:
     - name: Apply Terraform changes
       run: terraform apply -auto-approve
     - name: Allow Azure to pull latest image
-      run: curl -dH -X POST "$(terraform output -raw cd_webhook)"
+      run: curl -dH -X POST "$(terraform output -raw webhook_url)"

@@ -56,7 +56,7 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_cosmosdb_account" "db" {
-  name                = "danmou-terraform-cosmos-account"
+  name                = "${var.prefix}-danmou-terraform-cosmos-account"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   offer_type          = "Standard"
