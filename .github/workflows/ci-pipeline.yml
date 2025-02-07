@@ -11,6 +11,14 @@ on:
   schedule:
     - cron: '0 5 * * mon'
 
+env:
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  TF_VAR_oauth_client_id: ${{ secrets.TF_VAR_OAUTH_CLIENT_ID }}
+  TF_VAR_oauth_client_secret: ${{ secrets.TF_VAR_OAUTH_CLIENT_SECRET }}
+
 jobs:
   build:
     name: Build and test
@@ -48,5 +56,15 @@ jobs:
       run: docker build --target production --tag danmou367/my-todo-app:latest .
     - name: Publish image
       run: docker push danmou367/my-todo-app:latest
+  terraform:
+    runs-on: ubuntu-latest
+    needs: publish
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/exercise-12' }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Initialise Terraform
+      run: terraform init
+    - name: Apply Terraform changes
+      run: terraform apply -auto-approve
     - name: Allow Azure to pull latest image
-      run: curl -dH --fail -X POST '${{ secrets.AZURE_WEBHOOK }}'
+      run: curl -dH -X POST "$(terraform output -raw webhook_url)"
