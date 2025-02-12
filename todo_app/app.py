@@ -18,8 +18,7 @@ def create_app():
       app.config.from_object(Config())
       app.register_blueprint(blueprint, url_prefix="/login")
       app.wsgi_app = ProxyFix(app.wsgi_app)
-      os.environ.pop('COSMOS_DB_CONNECTION_STRING', None)
-      load_dotenv('.env')
+
       app.logger.setLevel(app.config['LOG_LEVEL'])
       if app.config['LOGGLY_TOKEN'] is not None:
             handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
