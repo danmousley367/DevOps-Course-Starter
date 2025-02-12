@@ -15,6 +15,7 @@ mongomock = "^4.2.0.post1"
 flask-dance = "^7.1.0"
 werkzeug = "3.0.6"
 jinja2 = "3.1.5"
+loggly-python-handler = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 

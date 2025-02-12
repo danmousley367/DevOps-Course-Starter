@@ -9,7 +9,7 @@ def get_items_list():
     db = client.todo_app_db
     return db.todo_list
 
-def add_todo_item(title):
+def add_todo_item(app, title):
     """
     Adds a new item with the specified title to the database.
 
@@ -26,12 +26,12 @@ def add_todo_item(title):
             "name": title,
             "status": Status.TODO.value
         })
-        print(response)
+        app.logger.info(f"Item added successfully. Response: {response}")
 
     except Exception as e:
-        print(f"Attempt to create item with title {title} failed. Error: {e}")
+        app.logger.exception(f"Attempt to create item with title {title} failed. Error: {e}")
 
-def get_todo_item(id):
+def get_todo_item(app, id):
     """
     Gets the item from the database.
 
@@ -45,12 +45,13 @@ def get_todo_item(id):
     
     try:
         response = items_list.find_one({"_id": ObjectId(id)})
+        app.logger.info(f"Item retrieved successfully. Response: {response}")
 
         return response
     except Exception as e:
-        print(f"Attempt to get item failed. Error: {e}")
+        app.logger.error(f"Attempt to get item failed. Error: {e}")
 
-def get_todo_items():
+def get_todo_items(app):
     """
     Fetches all saved items from the database.
 
@@ -62,12 +63,13 @@ def get_todo_items():
     try:
         response = items_list.find()
         items = list(response)
+        app.logger.info(f"Item list retrieved successfully.")
 
-        return items
+        return items or []
     except Exception as e:
-        print(f"Attempt to get items from database failed. Error: {e}")
+        app.logger.error(f"Attempt to get items from database failed. Error: {e}")
 
-def update_status(item_id, status):
+def update_status(app, item_id, status):
     """
     Updates the status an item to the specified status in the database.
 
@@ -78,11 +80,11 @@ def update_status(item_id, status):
     
     try:
         response = items_list.update_one({"_id": ObjectId(item_id)}, {'$set': {"status": status}})
-        print("update response", response)
+        app.logger.info(f"Item status updated successfully. Response: {response}")
     except Exception as e:
-        print(f"Attempt to mark item incomplete failed. Error: {e}")
+        app.logger.error(f"Attempt to mark item incomplete failed. Error: {e}")
 
-def delete_todo_item(item_id):
+def delete_todo_item(app, item_id):
     """
     Deletes an item in the database.
 
@@ -93,6 +95,6 @@ def delete_todo_item(item_id):
     
     try:
         response = items_list.delete_one({"_id": ObjectId(item_id)})
-        print("delete response", response)
+        app.logger.info(f"Item deleted successfully. Response: {response}")
     except Exception as e:
-        print(f"Attempt to delete item failed. Error: {e}")
+        app.logger.error(f"Attempt to delete item failed. Error: {e}")

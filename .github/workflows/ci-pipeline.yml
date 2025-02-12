@@ -59,7 +59,7 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     needs: publish
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/exercise-12' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/exercise-13' }}
     steps:
     - uses: actions/checkout@v4
     - name: Initialise Terraform
