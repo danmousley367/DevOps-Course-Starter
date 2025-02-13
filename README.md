@@ -129,3 +129,11 @@ The app is now deployed at:
 ### Data encryption status
 
 Our data is currently stored in Azure Cosmos DB, for which [all data is encrypted at rest](https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest).
+
+## Logging
+
+Logs are stored at Loggly. To view logs:
+* Log into [Loggly](https://www.loggly.com/login/)
+* Navigate to Logs > Log Explorer. 
+* Set the time range to the desired range and click Search. 
+* You should see your logs.
