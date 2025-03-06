@@ -1,0 +1,55 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: module-14
+spec:
+  selector:
+    matchLabels:
+      app: module-14
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: module-14
+    spec:
+      containers:
+        - name: todo-app
+          image: todo-app:prod
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 5000
+          env:
+            - name: FLASK_APP
+              value: todo_app/app
+            - name: FLASK_DEBUG
+              value: "true"
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-key
+                  key: secret-key
+            - name: COSMOS_DB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-db-connection-string
+                  key: cosmos-db-connection-string     
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-client-id
+                  key: oauth-client-id
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-client-secret
+                  key: oauth-client-secret
+            - name: OAUTHLIB_INSECURE_TRANSPORT
+              value: "1"
+            - name: LOG_LEVEL
+              value: DEBUG
+            - name: LOGGLY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: loggly-token
+                  key: loggly-token
